@@ -23,7 +23,7 @@ fi
 echo "Generating pipeline from your prompt..."
 echo ""
 
-gemini -f "$PAPER_FILE" "$(cat $PROMPT_FILE)" > "$OUTPUT_FILE"
+pdftotext "$PAPER_FILE" - | gemini -p "$(cat $PROMPT_FILE)" > "$OUTPUT_FILE"
 
 echo "Done. Generated: $OUTPUT_FILE"
 echo ""

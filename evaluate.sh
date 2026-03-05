@@ -25,7 +25,7 @@ fi
 echo "Evaluating your prompt..."
 echo ""
 
-gemini "$(cat $EVAL_FILE)
+gemini -p "$(cat $EVAL_FILE)
 
 ---
 STUDENT PROMPT TO EVALUATE:

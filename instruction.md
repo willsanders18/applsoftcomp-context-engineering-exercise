@@ -18,6 +18,8 @@ Read more: https://rlancemartin.github.io/2025/06/23/context_engineering/
 
 **Isolate** — Each stage is a separate Gemini call with its own focused context. The summarizer should not see the full paper history. The synthesizer should not receive raw PDFs.
 
+> **Gemini CLI note:** Use `gemini -p "your prompt"` for non-interactive mode. To pass a PDF, convert it first: `pdftotext paper.pdf - | gemini -p "your prompt"`. Your prompt should instruct the generated pipeline to do the same.
+
 ---
 
 ## What the pipeline should do
