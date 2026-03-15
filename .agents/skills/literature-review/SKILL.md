@@ -23,7 +23,7 @@ All sub-agents via Task tool (`general` or `mode: subagent`).
 1. Read `progress.txt` → pick next unreviewed paper (foundational first).
 2. Read `learning.txt` to understand accumulated themes and gaps.
 3. Extract the paper: `python3 tools/extract_pdf.py <input.pdf>`
-4. Append to `research_note.md` using the format in `templates/research_note.md`. Do not read the full file — append only.
+4. Read `templates/research_note.md` for the format, then append a new entry to `research_note.md`. Do not read `research_note.md` itself — append only.
 5. Append to `learning.txt` using the format in `templates/learning.txt`. Prioritize **new** themes. Note contradictions explicitly. Avoid restating existing themes.
 6. Update `progress.txt`: mark the paper done with a one-line note on what was produced.
 
@@ -31,6 +31,6 @@ All sub-agents via Task tool (`general` or `mode: subagent`).
 
 ## Stop Conditions
 
-- No papers remain (selector returns `DONE`)
+- No unreviewed papers remain in `progress.txt`
 - Worker fails repeatedly → escalate to user
 - User cancels
