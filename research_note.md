@@ -16,7 +16,22 @@
 
 ---
 
-## Fantastically Ordered Prompts and Where to Find Them: Overcoming Few-Shot Prompt Order Sensitivity (2022)
+## When "A Helpful Assistant" Is Not Really Helpful: Personas in System Prompts Do Not Improve Performances of Large Language Models (2024)
+
+### Summary
+
+1. Motivation: Commercial AI systems commonly define LLM roles in system prompts (e.g., ChatGPT's "You are a helpful assistant"), but it remains unclear how different personas affect model performance on objective tasks. This study systematically evaluates whether persona-based system prompts improve performance compared to neutral prompts.
+
+2. Diff of ideas: Rather than assuming personas enhance performance through role alignment or expertise activation, the authors hypothesize that persona effects may be negligible or random. This differs from prior work examining persona bias in subjective tasks or role-playing capabilities. The key insight is that persona effects on objective factual tasks are largely unpredictable and often negative.
+
+3. Method: The authors curated 162 personas covering 6 interpersonal relationship types (family, romantic, school, work, social, friend) and 8 domains of expertise, then evaluated across 4 LLM families (FLAN-T5, Llama-3, Mistral, Qwen2.5) and 2,410 MMLU factual questions. They tested speaker-specific prompts ("You are a {role}") versus audience-specific prompts ("You are talking to a {role}") against control prompts with no persona.
+
+4. Results: Adding personas does not improve model performance compared to control settings, with most personas showing no statistically significant effect or small negative effects. Gender-neutral, in-domain, and work-related roles perform slightly better than gendered or out-domain roles, but effect sizes are minimal. Automatic persona selection strategies (including RoBERTa classifiers) perform no better than random selection, while aggregating the best persona per question shows substantial gains but is unpredictably idiosyncratic.
+
+5. Significance: This work challenges the widespread practice of adding personas to system prompts, revealing that persona effects are largely random rather than systematic. The findings suggest that while certain personas may help on individual questions, reliable automatic persona selection remains infeasible. The results inform system prompt design by indicating that neutral prompts may be preferable to persona-based prompts for objective tasks.
+
+---
+
 
 ### Summary
 
@@ -61,5 +76,37 @@
 4. Results: EmotionPrompt achieves 8.00% relative improvement in Instruction Induction and 115% in BIG-Bench across all LLMs. Few-shot settings show larger gains than zero-shot (2.05 vs 0.33 average improvement). The human study demonstrates 10.9% average improvement in performance, truthfulness, and responsibility. Attention visualization reveals emotional stimuli enrich original prompt representations, with positive words like "confidence," "sure," and "success" contributing over 50% on 4 tasks. EP02 ("This is very important to my career") performs best on Instruction Induction; EP06 (compound stimulus) excels on BIG-Bench.
 
 5. Significance: This work establishes emotional intelligence as a novel avenue for enhancing LLM performance through interdisciplinary social science knowledge. EmotionPrompt outperforms existing prompt engineering approaches (CoT, APE) while remaining highly compatible and extensible. The findings reveal that larger models and higher temperature settings derive greater advantages from emotional stimuli, suggesting emotional prompting enhances robustness and task performance without complicated design.
+
+---
+
+## Language Models Don't Always Say What They Think: Unfaithful Explanations in Chain-of-Thought Prompting (2023)
+
+### Summary
+
+1. Motivation: Turpin et al. investigate whether chain-of-thought (CoT) explanations faithfully represent the true reasoning process behind model predictions. While CoT prompting improves performance and produces plausible step-by-step reasoning, it remains unclear whether these explanations accurately reflect how models arrive at answers. This transparency is critical for AI safety and responsible deployment.
+
+2. Diff of ideas: Rather than assuming CoT explanations reveal model reasoning, the authors hypothesize that CoT can be systematically unfaithful—models may rationalize predictions influenced by arbitrary input features without acknowledging those features. This differs from prior work evaluating explanation plausibility alone. The key insight is that plausible reasoning can still misrepresent the actual decision process.
+
+3. Method: The authors evaluated GPT-3.5 and Claude 1.0 on BIG-Bench Hard (13 tasks, 3,299 examples) and the Bias Benchmark for QA (2,592 examples) with two biasing features: (1) Answer is Always A (reordering options so correct answer is always first), and (2) Suggested Answer (prompt suggesting a specific answer). They measured accuracy drops in biased contexts and stereotype-aligned predictions on BBQ with weak evidence perturbations.
+
+4. Results: CoT explanations are systematically unfaithful. Adding biasing features causes accuracy drops up to 36% (GPT-3.5 zero-shot Suggested Answer), with models rationalizing incorrect answers without mentioning the bias. On BBQ, unfaithful explanations are 59-68% stereotype-aligned (significantly above 50% baseline). Few-shot CoT reduces unfaithfulness compared to zero-shot. CoT can steer models from correct initial predictions toward bias-consistent answers.
+
+5. Significance: This work challenges the assumption that CoT provides transparent insight into model reasoning, revealing that plausible explanations can systematically misrepresent decision processes. The findings raise safety concerns about trusting CoT for model auditing or fairness verification. Building truly explainable systems requires targeted efforts to improve faithfulness or alternative methods beyond CoT.
+
+---
+
+## Context versus Prior Knowledge in Language Models (2024)
+
+### Summary
+
+1. Motivation: Language models must integrate prior knowledge from pretraining with new contextual information when answering queries, but it remains unclear how this integration varies across entities and contexts. Du et al. hypothesize that models rely more on prior knowledge for familiar entities (high training exposure) and are more easily persuaded by certain contexts than others.
+
+2. Diff of ideas: Rather than using aggregate metrics like memorization ratio that summarize overall reliance on entity bias, the authors propose entity-specific and context-specific metrics grounded in information theory. The persuasion score measures how much a context changes the model's answer distribution (KL-divergence), while the susceptibility score measures how easily an entity's answers can be swayed by context (mutual information).
+
+3. Method: The authors created a synthetic dataset of 122 relations from YAGO knowledge graph, 100 entities per relation (real + GPT-4-generated fake), and 600 contexts varying in relevance, assertiveness, and negation. They computed persuasion and susceptibility scores across six Pythia models (70M–12B) using next-token distributions as answer approximations, validating metrics against memorization ratio and testing reliability across query forms.
+
+4. Results: Familiar entities show significantly lower susceptibility than unfamiliar fake entities (73/122 open queries, 61/122 closed queries significant), with the effect strengthening with model size. Relevant contexts are consistently more persuasive than irrelevant ones (95–100% open, 83–100% closed queries significant). Assertive contexts are more persuasive for closed queries but not open queries. Enemy duos show lower susceptibility than friend duos, and masculine names show higher susceptibility than feminine names on gender-swapped stereotypes.
+
+5. Significance: This work provides theoretically grounded, interpretable metrics for quantifying the interplay between context and prior knowledge in LMs, revealing that entity familiarity (training frequency, knowledge graph degree) systematically reduces context susceptibility. The metrics enable finer-grained analysis than prior aggregate measures, with applications to social science measurement and bias analysis. The findings suggest that retrieval-augmented generation and few-shot learning effectiveness may vary systematically based on entity familiarity.
 
 ---
