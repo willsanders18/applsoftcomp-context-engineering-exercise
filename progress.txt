@@ -3,14 +3,14 @@
 # STATUS: DONE | SKIPPED | BLOCKED
 # Add new entries below. Do not remove existing ones.
 
-# TODO
+# TODO (ordered by foundational importance)
 
-- [DONE] brown2020_gpt3_few_shot.pdf — research note entry + learning log entry on scale enabling in-context learning
-- [DONE] du2024_context_vs_prior.pdf — research note entry + learning log entry on information-theoretic metrics (persuasion/susceptibility scores) showing entity familiarity determines context reliance
-- [DONE] gupta2023_majority_label_bias.pdf — research note entry + learning log entry on RB10 metric showing larger LLMs are robust (~90%) to majority label bias in binary tasks, with instructions critical for robustness
-- [DONE] gupta2023_persona_bias.pdf — research note entry + learning log entry on persona-induced bias manifesting as explicit abstentions and implicit reasoning errors, with disability/religion dimensions most affected and de-biasing prompts ineffective
-- [DONE] leviathan2025_prompt_repetition.pdf — research note entry + learning log entry on prompt repetition addressing causal attention limitation, winning 47/70 tests with 0 losses, independent of scale or instruction-following
-- [DONE] li2023_emotional_stimuli.pdf — research note entry + learning log entry on EmotionPrompt showing LLMs comprehend and are enhanced by emotional stimuli (8% Instruction Induction, 115% BIG-Bench improvement) via attention weight enhancement and intrinsic motivation activation
-- [DONE] lu2022_prompt_order_sensitivity.pdf — research note entry + learning log entry on entropy-based probing for prompt order selection without validation data
-- [DONE] turpin2023_unfaithful_cot.pdf — research note entry + learning log entry on CoT faithfulness revealing chain-of-thought explanations can be plausible yet systematically unfaithful, with accuracy drops up to 36% from unmentioned biasing features and stereotype-aligned rationalizations (56-62% of unfaithful predictions)
-- [ ] zheng2024_personas_system_prompts.pdf —
+- [ ] brown2020_gpt3_few_shot.pdf — pending
+- [ ] lu2022_prompt_order_sensitivity.pdf — pending
+- [ ] gupta2023_majority_label_bias.pdf — pending
+- [ ] gupta2023_persona_bias.pdf — pending
+- [ ] li2023_emotional_stimuli.pdf — pending
+- [ ] turpin2023_unfaithful_cot.pdf — pending
+- [ ] zheng2024_personas_system_prompts.pdf — pending
+- [ ] du2024_context_vs_prior.pdf — pending
+- [ ] leviathan2025_prompt_repetition.pdf — pending
