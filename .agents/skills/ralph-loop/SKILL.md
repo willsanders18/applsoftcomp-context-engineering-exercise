@@ -1,135 +1,96 @@
 ---
 name: ralph-loop
-description: Orchestrates iterative work by spawning stateless sub-agents. The lead agent selects one task at a time, hands it to a fresh sub-agent with shared context files, collects results, and updates those files before the next iteration.
+description: Lead agent selects tasks one at a time, spawns a stateless sub-agent per task, collects results, updates progress.txt and learning.txt, repeats.
 ---
 
 # Ralph Loop
 
-The **lead agent** is the orchestrator. It never does the work itself — it selects tasks, delegates them to sub-agents, and maintains shared state between iterations.
+**Lead agent** = orchestrator. Never does the work. Selects tasks, spawns sub-agents, maintains shared state.
+**Sub-agent** = stateless. No memory of prior iterations. Reads context files, does task, reports back.
 
-Each **sub-agent** is stateless. It has no memory of previous iterations. Instead, it reads two files at the start of every task:
-
-- `progress.txt` — a log of what has been completed so far
-- `learning.txt` — lessons, pitfalls, and insights from previous iterations
+Shared files:
+- `progress.txt` — what's been done
+- `learning.txt` — lessons/pitfalls from prior iterations
 
 ---
 
-## Lead Agent Instructions
+## Lead Agent: Loop Steps
 
-### 1. Initialize (first run only)
-
-If `progress.txt` or `learning.txt` do not exist, create them as empty files with a brief header:
-
+**1. Init (first run only)**
+Create missing files:
 ```
-progress.txt:
-# Progress Log
-(empty — no tasks completed yet)
-
-learning.txt:
-# Lessons Learned
-(empty — no lessons yet)
+progress.txt:  # Progress Log\n(empty)
+learning.txt:  # Lessons Learned\n(empty)
 ```
 
-### 2. Select the next task
+**2. Select task**
+Read `progress.txt`. Pick next task that: not done, dependencies met, completable in one pass.
+No tasks left → write final summary, stop.
 
-Review `progress.txt` to understand what has already been done. Choose the next task that:
-- Has not been completed yet
-- Is unblocked (its dependencies are done)
-- Is small and concrete enough for a single sub-agent to finish in one pass
+**3. Spawn sub-agent**
+Single sub-agent per iteration. Prompt must include:
+1. Task description + done criteria
+2. Full contents of `progress.txt`
+3. Full contents of `learning.txt`
+4. Expected output format
+5. Explicit: *"No memory of prior iterations. Use only the context provided."*
 
-If no tasks remain, the loop is done. Write a final summary and stop.
+**4. Collect results**
+Review output: completed? errors? partial? new discoveries?
 
-### 3. Spawn a sub-agent
-
-Launch a single sub-agent. In the prompt, include:
-
-1. The **task description** — what to do, and what "done" looks like
-2. The **contents of `progress.txt`** — so the sub-agent knows what exists
-3. The **contents of `learning.txt`** — so the sub-agent avoids known pitfalls
-4. The **output format** — how the sub-agent should report its result (e.g., what files to write, what to return)
-
-Tell the sub-agent explicitly: *"You have no memory of previous iterations. Rely only on the context provided here and the files listed above."*
-
-### 4. Collect results
-
-When the sub-agent returns, review its output. Determine:
-- Was the task completed successfully?
-- Were there errors, partial results, or new discoveries?
-- What should future sub-agents know?
-
-### 5. Update shared state
-
+**5. Update shared state**
 Append to `progress.txt`:
 ```
-[DONE] <task name>
-  - What was done
-  - Output artifacts (file paths, key values, etc.)
-  - Date/iteration number
+[DONE] <task>
+  - what was done
+  - output artifacts (paths, values)
+  - iteration/date
 ```
-
-Append to `learning.txt` only when there is something genuinely useful:
+Append to `learning.txt` only if genuinely useful:
 ```
-[<task name>] <lesson>
-  - What happened
-  - What to do (or avoid) next time
+[<task>] <lesson>
+  - what happened
+  - what to do/avoid next time
 ```
+No padding. Factual and actionable only.
 
-Do **not** pad these files with noise. Keep entries factual and actionable.
-
-### 6. Loop
-
-Return to step 2 and select the next task.
+**6. Loop → back to step 2**
 
 ---
 
-## Sub-Agent Instructions
+## Sub-Agent: Steps
 
-At the start of your task:
+1. Read `progress.txt` — know what exists
+2. Read `learning.txt` — apply lessons before starting
+3. Do the task
+4. Report results clearly
 
-1. Read `progress.txt` — understand what work is already done and what artifacts exist
-2. Read `learning.txt` — apply all lessons before you begin
-3. Do the task described in your prompt
-4. Report your results clearly so the lead agent can update shared state
-
-You do not write to `progress.txt` or `learning.txt`. That is the lead agent's responsibility.
+Do NOT write to `progress.txt` or `learning.txt`. Lead agent owns those.
 
 ---
 
-## File Conventions
+## Stop Conditions
 
-| File | Owner | Purpose |
-|---|---|---|
-| `progress.txt` | Lead agent | Persistent log of completed work |
-| `learning.txt` | Lead agent | Accumulated lessons across iterations |
-
-Both files live in the working directory of the project unless otherwise specified.
+- All tasks done in `progress.txt`
+- Task failing repeatedly + blocker captured in `learning.txt` → escalate to user
+- User cancels
 
 ---
 
-## When to Stop
-
-The lead agent stops the loop when:
-- All tasks are marked done in `progress.txt`
-- A task fails repeatedly and `learning.txt` has captured the blocker — escalate to the user
-- The user explicitly cancels
-
----
-
-## Example Prompt to Sub-Agent
+## Example Sub-Agent Prompt
 
 ```
-You are a stateless sub-agent. You have no memory of previous iterations.
+You are a stateless sub-agent. No memory of previous iterations.
 
-## Your task
-<specific task description and done criteria>
+## Task
+<description and done criteria>
 
-## What has been done so far (progress.txt)
-<contents of progress.txt>
+## progress.txt
+<contents>
 
-## Lessons from previous iterations (learning.txt)
-<contents of learning.txt>
+## learning.txt
+<contents>
 
 ## Output
-Return a brief summary of what you did and what you produced.
-Do NOT modify progress.txt or learning.txt.
+Summarize what you did and produced. Do NOT modify progress.txt or learning.txt.
 ```
