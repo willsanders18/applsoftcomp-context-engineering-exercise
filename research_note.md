@@ -31,3 +31,19 @@
 5. Significance: The metrics provide valid, reliable, and interpretable tools for analyzing context-prior knowledge interactions in LMs. Applications include social science measurement (understanding annotation reliability for different entity types) and gender bias analysis. The framework enables greater control over model behavior and can extend to retrieval-augmented generation, model editing, and few-shot learning.
 
 ---
+
+## How Robust are LLMs to In-Context Majority Label Bias? (Gupta et al., 2023)
+
+### Summary
+
+1. Motivation: In-context learning is susceptible to label biases when the distribution of labeled examples in prompts is skewed toward specific classes. Such skewness arises from logistical constraints, data collection biases, or limited data diversity in real-world industry settings. Prior work (Zhao et al. 2021) showed GPT-3 prefers frequent labels in-context, but did not exhaustively examine robustness across varying class proportions.
+
+2. Diff of ideas: Unlike prior work that demonstrated susceptibility to majority label bias, this paper introduces the RobustnessBoundary@K metric to quantify the boundary of robustness across distributional shifts. The metric measures the percentage of label distribution settings where weighted F1-score stays within ±K% of the maximum achieved F1, providing a practical measure for real-world deployment under skewness. This shifts the question from whether bias exists to how much robustness different models exhibit.
+
+3. Method: Five open-source LLMs (OpenLlama-7B/13B, MPT-7B/30B, Falcon-40B) are instruction-tuned on OASST and evaluated on BoolQ, RTE (binary), and COVID-5G Conspiracy (multi-class) datasets. Prompts vary label proportions systematically: for binary tasks, 11 settings from (0% True, 100% False) to (100% True, 0% False) in 10% steps; for multi-class, 15 carefully selected proportion combinations. Two prompt strategies are compared: with task-specific instructions versus without. The RB10 metric is computed alongside mean and standard deviation of weighted F1 across 5 random seeds.
+
+4. Results: For binary classification, larger LLMs achieve RB10 in the range 80-100%, with Falcon-40B with instructions reaching 90.9% on BoolQ and 100% on RTE—contradicting prior claims that LLMs suffer from majority label bias. Robustness drops significantly for multi-class tasks (~50% RB10 on COVID-5G). Model size correlates positively with robustness: MPT-30B improves ~10.51% over 13B, Falcon-40B improves ~3.08% over 30B. Task-specific instructions substantially improve robustness at distribution tails (extreme skewness), with performance gaps amplifying with model size (~8.3% drop for 7B, ~27.9% drop for 30B/40B without instructions).
+
+5. Significance: The work establishes that larger LLMs are resilient to majority label bias in binary tasks when equipped with informative instructions, refining the understanding of scale effects from Brown 2020. The RB_K metric provides practitioners a tool to assess fault tolerance under real-world label skewness. The finding that larger models are more sensitive to instructions (both positively and negatively) suggests scale amplifies instruction-following capability rather than just context integration.
+
+---
