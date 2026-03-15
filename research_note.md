@@ -31,3 +31,19 @@
 5. Significance: This work identifies order sensitivity as a fundamental challenge in in-context learning that scale alone does not resolve. The probing method enables true few-shot learning without requiring additional annotated validation data, outperforming train-set splitting approaches. The findings suggest that prompt engineering must account for sample ordering as a critical hyperparameter, and that entropy-based selection provides a practical, model-agnostic solution.
 
 ---
+
+## How Robust are LLMs to In-Context Majority Label Bias? (2023)
+
+### Summary
+
+1. Motivation: Gupta et al. investigate majority label bias in in-context learning (ICL), where skewed label distributions in demonstration examples cause models to preferentially predict frequent labels. This bias arises from real-world data collection constraints and limits ICL reliability. Prior work (Zhao et al. 2021) showed ICL is susceptible to extreme class imbalance, but did not exhaustively examine robustness across varying label proportions.
+
+2. Diff of ideas: Rather than treating majority label bias as an inherent limitation of ICL, the authors hypothesize that robustness varies substantially across models and tasks. They introduce the RobustnessBoundary@K (RBK) metric to quantify the percentage of label distribution settings where performance stays within ±K% of peak performance. This differs from prior work focusing on mean performance or standard deviation alone.
+
+3. Method: The authors evaluated open-source LLMs (OpenLlama 7B/13B, MPT 7B/30B, Falcon 40B) on three text classification datasets (BoolQ, RTE, COVID-5G Conspiracy) with systematically varied label proportions in prompts. For binary datasets, they tested 11 settings from 0% to 100% of one label in 10% increments. Models were instruction-tuned on OASST data. They compared prompts with and without task-specific instructions.
+
+4. Results: Larger models show greater robustness to majority label bias. Falcon-40B with instructions achieves RB10 of ~90-100% on binary tasks (BoolQ, RTE) but only ~53% on multi-class COVID-5G. Task instructions substantially improve robustness at extreme skew points, with larger models showing greater instruction sensitivity (27.9% drop for 30B/40B models without instructions vs. 8.3% for 7B). OpenLlama-13B shows ~1.62% RB10 improvement over 7B; MPT-30B shows ~10.51% improvement over 13B.
+
+5. Significance: This work challenges the prior claim that LLMs are uniformly susceptible to majority label bias, revealing that larger models exhibit substantial robustness boundaries (~80-100% for binary tasks). The RBK metric provides a practical measure for practitioners evaluating model deployment under label distribution skew. The findings establish that model scale and instructional prompts are critical factors in mitigating context label bias, though multi-class tasks remain challenging.
+
+---
