@@ -14,18 +14,34 @@ Stateless sub-agents run per paper. The lead agent is a loop controller only.
 ## Lead Agent Loop
 
 1. Init (first run only): copy `./agents/skills/templates/progress.txt`, `./agents/skills/templates/learning.txt`, `./agents/skills/templates/research_note.md`, and `./agents/skills/templates/synthesis.md` into the working directory if they don't exist. Also list all PDF files in the working directory and populate `progress.txt` with unchecked entries for each.
-2. Pass `progress.txt` + `learning.txt` to a sub-agent.
+2. Spaw the Abstract Extraction Sub-Agent for each paper (can be parallelized). Wait for all to finish.
+3. Spawn the Planning Agent to read abstracts and plan the review order. Wait for it to finish.
+2. Pass `progress.txt` + `learning.txt` to a reading sub-agent.
 3. Repeat until stop condition.
 
 All sub-agents via Task tool (`general` or `mode: subagent`).
 
 ## Sub-Agent Instructions
 
+
+### Abstract extraction sub-agent (runs once per paper, can be parallelized) 
+
+- input: pdf of a paper 
+- extract the text from the pdf by `python3 tools/extract_pdf.py <input.pdf>` 
+- save it to "abstracts.txt" in the format: `filename.pdf: abstract text`. Append to the file if it already exists. Do not read the file, only append. 
+
+### Planning sun-agents (runs once, after abstracts are extracted) 
+
+- input: abstracts.txt
+- read the abstracts and plan the order of papers to review. Prioritize foundational papers first. Update `progress.txt` to reflect the planned order (reorder entries if needed). Do not mark any paper as done at this stage.
+
+### Reading sub-agent (runs once per paper, sequentially) 
+
 1. Read `progress.txt` → pick next unreviewed paper (foundational first).
 2. Read `learning.txt` to understand accumulated themes and gaps.
 3. Extract the paper: `python3 tools/extract_pdf.py <input.pdf>`
 4. Read `templates/research_note.md` for the format, then append a new entry to `research_note.md`. Do not read `research_note.md` itself. append only.
-5. Append to `learning.txt` using the format in `templates/learning.txt`. Prioritize **new** themes. Note contradictions explicitly. Avoid restating existing themes.
+5. Append to `learning.txt` using the format in `templates/learning.txt`. Note contradictions explicitly. Avoid restating existing themes. Keep conversational tone, and speak laud as if explaining to a peer. Use LaTeX for equations, and define jargon when first introduced. Max 3 sentences/paragraph. Do not use bullet points or tables. Write in paragraph-based format. 
 6. Update `progress.txt`: mark the paper done with a one-line note on what was produced.
 
 Writing style: Clear and concise. Define jargon. LaTeX for equations (display mode for key ones). Max 3 sentences/paragraph. Narrative over bullets.
@@ -36,9 +52,10 @@ After all papers are reviewed (no unchecked entries remain in `progress.txt`), r
 
 1. Read `research_note.md` and `learning.txt`.
 2. Read `templates/synthesis.md` for the format.
+
 3. Write `synthesis.md` in the working directory, filling in all three sections (Synthesis, Contradictions, Open Questions). Do not append—write the complete file.
 
-Writing style: same as sub-agents. Clear and concise. Define jargon. LaTeX for equations. Max 3 sentences/paragraph. Narrative over bullets.
+Writing style: same as sub-agents. Clear and concise. Define jargon. LaTeX for equations. Max 3 sentences/paragraph. Write in paragraph-based format. Do not use bullet points and table. Keep conversational tone. 
 
 ## Stop Conditions
 

@@ -3,17 +3,13 @@
 # STATUS: DONE | SKIPPED | BLOCKED
 # Add new entries below. Do not remove existing ones.
 
-# DONE
-
-- [DONE] brown2020_gpt3_few_shot.pdf — research note with Summary (Motivation, Method, Results, Significance) + learning reflection
-
-# TODO (ordered by foundational importance)
-
-- [DONE] lu2022_prompt_order_sensitivity.pdf — research note with Summary (Motivation, Method, Results, Significance) + learning on order sensitivity contradicting brown2020 stability assumptions
-- [DONE] gupta2023_majority_label_bias.pdf — research note with Summary (Motivation, Method, Results, Significance) + learning on label bias robustness boundaries in ICL
-- [DONE] gupta2023_persona_bias.pdf — research note with Summary (Motivation, Method, Results, Significance) + learning on persona-induced bias distinct from majority label bias, persisting despite scale and de-biasing prompts
-- [DONE] li2023_emotional_stimuli.pdf — research note with Summary (Motivation, Method, Results, Significance) + learning on emotional prompts improving performance through psychological mechanisms
-- [DONE] turpin2023_unfaithful_cot.pdf — research note with Summary (Motivation, Method, Results, Significance) + learning on unfaithful CoT explanations challenging transparency assumptions
-- [DONE] zheng2024_personas_system_prompts.pdf — research note with Summary (Motivation, Method, Results, Significance) + learning on system prompt personas showing random effects unlike gupta2023_persona_bias user-assigned persona bias
-- [DONE] du2024_context_vs_prior.pdf — research note with Summary (Motivation, Method, Results, Significance) + learning on information-theoretic metrics revealing entity familiarity reduces context susceptibility, complementing gupta2023 robustness findings
-- [DONE] leviathan2025_prompt_repetition.pdf — research note with Summary (Motivation, Method, Results, Significance) + learning on prompt repetition as structural solution to causal attention constraints, complementing lu2022 order sensitivity and du2024 entity familiarity findings
+# Planned Review Order (foundational first)
+- [x] brown2020_gpt3_few_shot.pdf — foundational few-shot learning baseline
+- [x] lu2022_prompt_order_sensitivity.pdf — entropy-based probing for order selection, 13% improvement
+- [x] gupta2023_majority_label_bias.pdf — RB@10 metric shows 50-90% robustness to label skew, larger models + instructions help
+- [x] gupta2023_persona_bias.pdf — persona-induced bias: 80% personas show bias, 35%+ drops for disabled/religious, de-biasing prompts ineffective
+- [x] zheng2024_personas_system_prompts.pdf — personas do not improve factual performance; effects are random and unpredictable
+- [x] li2023_emotional_stimuli.pdf — EmotionPrompt: 8% gain Instruction Induction, 115% BIG-Bench, 10.9% human study
+- [x] turpin2023_unfaithful_cot.pdf — CoT explanations systematically unfaithful; accuracy drops 36% when biased toward incorrect answers
+- [x] du2024_context_vs_prior.pdf — mutual information metrics (persuasion $\psi$, susceptibility $\chi$) show entity familiarity reduces context susceptibility; relevant contexts more persuasive
+- [x] leviathan2025_prompt_repetition.pdf — prompt repetition improves non-reasoning LLMs (47/70 wins, no latency cost)

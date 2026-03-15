@@ -1,6 +1,6 @@
 # Learning Log
 # Running reflections across papers. Written in progressive, conversational form.
-# Each entry: [paper-filename] <reflection>
+# Each entry: [paper-filename] <reflection; 3 sentence max>
 # Focus on: new learning from the paper, contradictions with prior papers, methodological patterns, open gaps.
 # If a prior theme is no longer supported by new evidence, note that explicitly.
 
