@@ -3,9 +3,12 @@
 # STATUS: DONE | SKIPPED | BLOCKED
 # Add new entries below. Do not remove existing ones.
 
+# DONE
+
+- [DONE] brown2020_gpt3_few_shot.pdf — research note with Summary (Motivation, Method, Results, Significance) + learning reflection
+
 # TODO (ordered by foundational importance)
 
-- [ ] brown2020_gpt3_few_shot.pdf — pending
 - [ ] lu2022_prompt_order_sensitivity.pdf — pending
 - [ ] gupta2023_majority_label_bias.pdf — pending
 - [ ] gupta2023_persona_bias.pdf — pending
