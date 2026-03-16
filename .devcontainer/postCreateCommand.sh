@@ -23,6 +23,13 @@ cat > ~/.config/opencode/opencode.json << 'EOF'
           "name": "qwen3.5:cloud"
         }
       }
+    },
+    "openrouter": {
+      "models": {
+        "qwen/qwen3.5-flash-02-23": {
+          "name": "Qwen3.5 Flash"
+        }
+      }
     }
   }
 }
