@@ -15,14 +15,9 @@ cat > ~/.config/opencode/opencode.json << 'EOF'
 {
   "$schema": "https://opencode.ai/config.json",
   "autoshare": false,
-  "model": "ollama/qwen3.5:35b",
+  "model": "ollama-cloud/qwen3.5:35b",
   "provider": {
-    "ollama": {
-      "npm": "@ai-sdk/openai-compatible",
-      "name": "Ollama",
-      "options": {
-        "baseURL": "https://ollama.com/v1"
-      },
+    "ollama-cloud": {
       "models": {
         "qwen3.5:35b": {
           "name": "qwen3.5:35b"
@@ -47,7 +42,8 @@ echo "=== Setup complete! ==="
 echo ""
 echo "Next steps:"
 echo "  1. Open a terminal and run: opencode"
-echo "  2. Enter your Ollama API key when prompted (get one at ollama.com/settings/keys)"
+echo "  2. Type /connect, select 'Ollama Cloud', and enter your API key"
+echo "     (get one at ollama.com → Settings → Keys)"
 echo "  3. In OpenCode, type /setup to verify dependencies"
 echo "  4. Follow the exercise in docs/task.md"
 echo ""
