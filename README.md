@@ -79,27 +79,28 @@ Open a **fresh** opencode session by running `/new`.
 
 > **Why a structured PRD format?** Each task subsection is a self-contained unit of context: the agent implementing it should need nothing else. If a task can't be written clearly in this format, it's not well-understood yet.
 
-Paste this prompt and replace `[SKILL]`:
+Write a prompt that does three things:
+1. **States your goal** — what skill you're building and where it lives
+2. **Instructs the agent to interview you** — one question at a time, until nothing is ambiguous
+3. **Specifies the output format** — tell the agent exactly what `PRD.md` should look like per task
+
+Use this scaffold — fill in every `[...]`:
 
 ```
-I want to build an AI skill called [SKILL] under .agents/skills/<skill-name>.
-Interview me RELENTLESSLY until nothing is ambiguous.
-Ask one question at a time. Ask about inputs, outputs, edge cases, tools needed, and output
-format.  Then write PRD.md where each task is a subsection with format as follows:
+I want to build [DESCRIBE YOUR SKILL] under .agents/skills/[SKILL-NAME].
 
-'''
-## Task <number>: <task name>
-- Goal: <what the task achieves>
-- Inputs: <what inputs the task takes>
-- Outputs: <what outputs the task produces>
-- Specification 1:
-- Specification 2:
-- ...
+[HOW SHOULD THE AGENT INTERVIEW YOU?
+ — how many questions at a time?
+ — what topics must it cover (inputs, outputs, edge cases, tools, format)?
+ — how does it know when to stop asking?]
 
-Test cases:
-- Test 1: <description of the test>
-- Test 2: <description of the test>
-'''
+When the interview is complete, write PRD.md. Each task is a subsection:
+
+## Task <N>: <name>
+- Goal: [WHAT FORMAT?]
+- Inputs: [WHAT FORMAT?]
+- Outputs: [WHAT FORMAT?]
+- Specification: [WHAT FORMAT?]
 ```
 
 **Output:** `PRD.md`
@@ -114,11 +115,24 @@ Open a **fresh** opencode session. Paste this prompt:
 
 > **Why confirm each task's tests with a human?** You are the authority on what success looks like. The agent proposes; you decide. This step is where you catch misunderstandings before they get built.
 
+Write a prompt that does three things:
+1. **Points the agent to your plan** — what file to read
+2. **Defines what good tests look like** — what types of cases to cover, what each test must include
+3. **Keeps you in the loop** — how the agent should get your approval before writing anything
+
+Use this scaffold — fill in every `[...]`:
+
 ```
-Read PRD.md. For each task, propose test cases covering: happy path, edge
-cases, bad inputs, and failure modes. Each test must have an explicit input and
-expected output. Show me the tests for each task and ask me to confirm or
-refine before moving to the next. When all are approved, write it in PRD.md.
+Read [WHICH FILE?].
+
+For each task, propose test cases covering [WHAT TYPES OF CASES?].
+Each test must specify [WHAT MUST EACH TEST INCLUDE — input? expected output? anything else?].
+
+[HOW SHOULD THE AGENT INTERACT WITH YOU?
+ — show one task at a time or all at once?
+ — ask for confirmation before moving on?]
+
+When all tests are approved, [WHERE AND HOW SHOULD IT WRITE THEM?].
 ```
 
 **Output:** `PRD.md` (updated with test cases)
@@ -131,28 +145,55 @@ refine before moving to the next. When all are approved, write it in PRD.md.
 
 > **Why `learning.txt`?** Fresh context means the agent can't remember what the previous agent learned. `learning.txt` is the controlled channel for passing forward only what matters — not the whole history, just the distilled insight.
 
-First, read [.agents/skills/literature-review/SKILL.md](.agents/skills/literature-review/SKILL.md) — it demonstrates the pattern: a Lead Agent that loops, spawning one Sub-Agent per task via the Task tool, each reading shared state and stopping after one task.
+### The Ralph Wiggum Approach
 
-Then paste this prompt into opencode to write your `SKILL.md`:
+Ralph Wiggum does one thing at a time and keeps it simple. Applied to agents:
 
+- **One task per agent.** Each Sub-Agent picks one task, executes it, and stops. No accumulation, no drift.
+- **Shared files are the only memory.** `progress.txt` tracks what's done. `learning.txt` carries forward only the lessons that matter.
+- **The Lead Agent just loops.** It doesn't do the work — it spawns Sub-Agents one at a time and waits.
+
+### Spawning Sub-Agents
+
+The Lead Agent spawns Sub-Agents using the **Task tool**. The key constraint: **the sub-agent has no context other than what you put in its prompt.** It cannot see the conversation, the files you've read, or anything else. Its prompt must be fully self-contained.
+
+A sub-agent prompt typically tells it: which files to read, what to do, what to write, and when to stop.
+
+### Write your SKILL.md
+
+Read [`.agents/skills/literature-review/SKILL.md`](.agents/skills/literature-review/SKILL.md) first — it is a complete working example of this pattern.
+
+Then write `.agents/skills/<skill-name>/SKILL.md` using this skeleton — fill in every `[...]`:
+
+```markdown
+---
+name: [SKILL NAME]
+description: [ONE SENTENCE: what it does and how]
+---
+
+Shared files: `progress.txt` ([WHAT DOES IT TRACK?]), `learning.txt` ([WHAT DOES IT TRACK?])
+
+## Lead Agent
+1. Init (first run only): [WHAT FILES TO CREATE? WHAT TO PUT IN THEM?]
+2. Spawn Sub-Agent for the next incomplete task via the Task tool. Wait.
+3. Repeat step 2 until all tasks are done.
+
+## Sub-Agent
+1. Read PRD.md, progress.txt, and learning.txt.
+2. Pick the next incomplete task from progress.txt.
+3. [WHAT DOES IT DO? BE SPECIFIC.]
+4. Run the relevant tests from PRD.md. [WHAT COUNTS AS PASSING?]
+5. Append to learning.txt: [WHAT SHOULD IT RECORD?]
+6. Mark the task done in progress.txt with a one-line note.
+7. Stop. Do not proceed to the next task.
+
+## Stop Conditions
+- [WHEN IS THE WHOLE SKILL COMPLETE?]
+- Sub-agent fails repeatedly → escalate to user
+- User cancels
 ```
-Read PRD.md and .agents/skills/literature-review/SKILL.md.
 
-Write .agents/skills/<skill-name>/SKILL.md using the ralph wiggum pattern from
-literature-review as a reference. The Lead Agent initializes progress.txt and
-learning.txt if they don't exist, then spawns one Sub-Agent per task via the
-Task tool — waiting for each to finish before spawning the next.
-
-Each Sub-Agent must:
-1. Read PRD.md, progress.txt, and learning.txt for context.
-2. Select the next incomplete task from progress.txt.
-3. Execute the task and run its tests from PRD.md.
-4. Append to learning.txt: what was done, what worked, what failed.
-5. Mark the task done in progress.txt with a one-line note.
-6. Stop. Do not proceed to the next task.
-
-Include stop conditions: all tasks done, repeated failure, or user cancels.
-```
+If you can't fill in a `[...]`, that's a sign your `PRD.md` needs more detail — go back to Step 2.
 
 Once `SKILL.md` is written, run it. The Lead Agent will work through all tasks automatically.
 
