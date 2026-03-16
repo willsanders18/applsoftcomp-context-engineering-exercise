@@ -1,5 +1,7 @@
 # Setup
 
+![](https://opencode.ai/_build/assets/opencode-min-CiEsORKQ.mp4)
+
 > [!WARNING]
 > Set the LLM to `qwen3.5:35b`, `qwen3.5:397b`, or `glm-5` before starting.
 > These are available via [OpenRouter](https://openrouter.ai/) and [Ollama](https://ollama.com/) for free.

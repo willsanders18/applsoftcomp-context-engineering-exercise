@@ -4,7 +4,7 @@ Choose a skill to build:
 
 | Level | Skill | What it does |
 |---|---|---|
-| ⭐ | `study-notes` | Given a lecture PDF, produce structured notes with key concepts, definitions, and practice questions |
+| ⭐ | `study-notes` | Given a paper PDF, produce structured notes with key concepts, definitions, and practice questions |
 | ⭐⭐ | `trip-planner` | Given budget, dates, and group size, plan a trip from Binghamton with itinerary and costs |
 | ⭐⭐⭐ | `arxiv-recommender` | Given a research interest or paper abstract, recommend relevant arXiv papers with explanations |
 
