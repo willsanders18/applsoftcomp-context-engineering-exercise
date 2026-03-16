@@ -66,34 +66,21 @@ git commit the updated PRD.md.
 
 ## Step 4: Implement (Ralph Wiggum Pattern)
 
-Let's implement the plan using the Ralph Wiggum pattern. The idea: instead of one agent trying to do everything, we spawn a fresh agent for each task. Each agent has no memory of previous agents, so it cannot drift. The only memory is in shared files that carry forward what matters (e.g., `learning.txt` and `progress.txt`).
+Write a prompt to implement the plan based on the Ralph Wiggum loop. Your prompt must: 
+1. instruct the agent to spawn a fresh sub-agent for each task, with no memory of previous agents
+2. specify the shared files for communication between agents (e.g., `learning.txt` and `progress.txt`)
+3. write the loop for the Lead Agent, including when to spawn and when to stop
+4. write the steps for the Sub-Agent, including how it picks a task, what it produces, how it verifies its work against the tests in `PRD.md`, what it writes to `learning.txt`, how it marks the task done, and how it ensures it stops after one task
+5. specify the stop conditions for the whole skill, and what happens on repeated failure
 
 See [`.agents/skills/literature-review/SKILL.md`](../.agents/skills/literature-review/SKILL.md) for an example.
 
-### How it works
 
-- **Lead Agent:** a loop controller. It initializes shared files on first run, spawns one sub-agent per task via the Task tool, waits, then repeats until done.
-- **Sub-Agent:** spawned fresh each time via the Task tool. It has no memory of previous agents. Its prompt must be fully self-contained.
-- **Shared files:** the only memory between agents. Typically `progress.txt` (what is done) and `learning.txt` (lessons learned).
+> [!NOTE] How Ralph Wiggum Pattern works:
+> - **Lead Agent:** a loop controller. It initializes shared files on first run, spawns one sub-agent per task via the Task tool, waits, then repeats until done.
+> - **Sub-Agent:** spawned fresh each time via the Task tool. It has no memory of previous agents. Its prompt must be fully self-contained.
+> - **Shared files:** the only memory between agents. Typically `progress.txt` (what is done) and `learning.txt` (lessons learned).
 
-### Checklist for the implementation prompt
-
-When writing the implementation prompt for the sub-agent, make sure to cover: 
-
-- [ ] **Shared files:** What files do agents communicate through? For each: who reads it, who writes it, what does it contain?
-- [ ] **Initialization:** The files do not exist on first run. What does the Lead Agent create, and what does it put in them?
-- [ ] **Lead Agent loop:** Write the loop as a numbered list. When does it spawn? When does it stop?
-- [ ] **Sub-Agent steps:** The sub-agent knows nothing. Write every step:
-   - Which files does it read, and why?
-   - How does it pick which task to do?
-   - What does it produce?
-   - How does it verify its work against the tests in `PRD.md`?
-   - What does it write to `learning.txt`? Be specific about what kind of information belongs there.
-   - How does it mark the task done?
-   - How does it ensure it stops after one task?
-- [ ] **Stop conditions:** When is the whole skill complete? What happens on repeated failure?
-
-If you cannot answer a question, your `PRD.md` is not specific enough. Go back to Step 2.
 
 ## Validation 
 
