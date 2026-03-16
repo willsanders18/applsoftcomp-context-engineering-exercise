@@ -1,6 +1,6 @@
 # Setup
 
-![](https://opencode.ai/_build/assets/opencode-min-CiEsORKQ.mp4)
+![](./opencode.png)
 
 > [!WARNING]
 > Set the LLM to `qwen3.5:35b`, `qwen3.5:397b`, or `glm-5` before starting.
