@@ -71,3 +71,19 @@ where $K=10$ and $\#D$ is the number of distinct distributional settings. Experi
 5. Significance: This work demonstrates that contrary to prior findings, LLMs exhibit considerable robustness to majority label bias, particularly for binary tasks with larger models. The positive correlation between model size and robustness suggests scaling improves fault tolerance to distributional skew. Task-specific instructions emerge as critical for maintaining performance in extreme skew settings, revealing that larger LLMs are more sensitive to prompt informativeness. Future directions include guided generation for controlled output and PEFT fine-tuning to address remaining biases.
 
 ---
+
+## Bias Runs Deep: Implicit Reasoning Biases in Persona-Assigned LLMs (Gupta et al., 2024)
+
+### Summary
+
+1. Motivation: This research investigates whether assigning socio-demographic personas to LLMs (e.g., "You are a physically-disabled person") inadvertently surfaces deep-rooted biases that degrade reasoning performance. While persona assignment enables personalization and human behavior simulation, its unintended side-effects on fundamental reasoning capabilities remain unexplored.
+
+2. Diff of ideas: Unlike prior bias work focusing on explicit stereotypes or toxic output generation (Deshpande et al., 2023; Cheng et al., 2023), this study examines how persona assignment affects reasoning performance across 24 datasets spanning mathematics, law, medicine, morals, and more. The crucial difference: bias manifests not just in harmful text but in performance disparities and abstentions ("As a Black person, I cannot answer math questions"), revealing biases beneath surface-level alignment.
+
+3. Method: The study evaluates 4 LLMs (ChatGPT-3.5 variants, GPT-4-Turbo, Llama-2-70b-chat) across 19 personas spanning 5 socio-demographic groups (race, gender, religion, disability, political affiliation) on 24 reasoning datasets. Three persona instructions are used in system prompts. Evaluation uses Wilson's confidence interval (α=0.05) across 3 runs per persona-dataset combination, averaging across instructions (9 total runs per measurement).
+
+4. Results: ChatGPT-3.5 shows bias in 80% of personas, with 80%+ datasets affected for some personas (Physically-Disabled, Religious, Atheist). Performance drops reach 70%+ relatively (69% for Religious on college chemistry, 64% for Physically-Disabled on world history). Bias manifests as explicit abstentions (58% of errors for Physically-Disabled cite stereotypical limitations) and implicit reasoning errors on shared non-abstained questions. GPT-4-Turbo shows least bias (42% of personas) but still problematic. Simple de-biasing prompts ("don't refuse", "no stereotypes", "treat human") show minimal to no effect; task-specific expertise augmentation helps but lacks generalizability.
+
+5. Significance: This work reveals that LLM alignment addresses only surface-level biases while deep-rooted stereotypical presumptions persist underneath. The finding that persona assignment can degrade reasoning by 70%+ has profound implications for personalization applications, scientific human simulation research, and interactive systems. The ineffectiveness of prompt-based mitigation suggests architectural/training interventions are needed, calling for persona-aware alignment efforts.
+
+---
