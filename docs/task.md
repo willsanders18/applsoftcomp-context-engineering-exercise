@@ -21,23 +21,20 @@ Every ambiguity left unresolved becomes a silent decision the agent makes during
 
 Discard the prototype. Open a fresh session (`/new`).
 
-Write a prompt using this scaffold (fill in every `[...]`):
+Paste this prompt (replace `[SKILL]` and `[SKILL-NAME]`):
 
 ```
-I want to build [DESCRIBE YOUR SKILL] under .agents/skills/[SKILL-NAME].
-
-[HOW SHOULD THE AGENT INTERVIEW YOU?
- - how many questions at a time?
- - what topics must it cover: inputs, outputs, edge cases, tools, format?
- - how does it know when to stop asking?]
-
-When the interview is complete, write PRD.md. Each task is a subsection:
+I want to build an AI skill called [SKILL] under .agents/skills/[SKILL-NAME].
+Interview me RELENTLESSLY until nothing is ambiguous.
+Ask one question at a time. Cover inputs, outputs, edge cases, tools, and output format.
+Then write PRD.md where each task is a subsection:
 
 ## Task <N>: <name>
-- Goal: [WHAT FORMAT?]
-- Inputs: [WHAT FORMAT?]
-- Outputs: [WHAT FORMAT?]
-- Specifications: [WHAT FORMAT?]
+- Goal:
+- Inputs:
+- Outputs:
+- Specification 1:
+- Specification 2:
 ```
 
 **Output:** `PRD.md`
