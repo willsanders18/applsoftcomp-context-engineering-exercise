@@ -15,7 +15,7 @@ Shared files: `progress.txt` (done/remaining), `learning.txt` (cross-paper insig
 ## Sub-Agents (all spawned via Task tool, `general`/`mode: subagent`)
 
 Abstract Extraction (parallelizable, once per paper):
-1. Run `uv run uv run uv run uv run uv run uv run python3 tools/extract_pdf.py <input.pdf>`.
+1. Run `uv run python3 tools/extract_pdf.py <input.pdf>`.
 2. Append `filename.pdf: abstract text` to `abstracts.txt`. Append only; do not read.
 
 Planning (once):
@@ -25,7 +25,7 @@ Planning (once):
 Reading (sequential, once per paper):
 1. Read `progress.txt` → pick next unreviewed paper.
 2. Read `learning.txt` for accumulated themes/gaps.
-3. Extract paper: `uv run uv run uv run uv run uv run uv run python3 tools/extract_pdf.py <input.pdf>`.
+3. Extract paper: `uv run python3 tools/extract_pdf.py <input.pdf>`.
 4. Read `templates/research_note.md` for format; append new entry to `research_note.md`. Append only; do not read `research_note.md`.
 5. Append to `learning.txt` (format from `templates/learning.txt`). Note contradictions; avoid restating existing themes.
 6. Mark paper done in `progress.txt` with one-line note.

@@ -38,9 +38,9 @@ EOF
 # ── 3. Update skill commands for this environment ─────────────────────────
 echo "Updating skill commands..."
 for skill_file in .agents/skills/*/SKILL.md; do
-  if [ -f "$skill_file" ]; then
+  if [ -f "$skill_file" ] && ! grep -q "uv run python3" "$skill_file"; then
     sed -i "s/python3 /uv run python3 /g" "$skill_file"
-    sed -i "s/python /uv run python3 /g" "$skill_file"
+    sed -i "s/\bpython \b/uv run python3 /g" "$skill_file"
   fi
 done
 

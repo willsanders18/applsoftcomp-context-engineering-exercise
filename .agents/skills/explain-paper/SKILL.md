@@ -6,7 +6,7 @@ description: Explains a paper comprehensively and concisely.
 Read the paper by running `tools/extract_pdf.py` to extract text from PDF files.
 
 ```
-uv run uv run uv run uv run uv run uv run python3 tools/extract_pdf.py <input.pdf>
+uv run python3 tools/extract_pdf.py <input.pdf>
 ```
 (Use `python` instead of `python3` if that's what your environment provides.)
 
