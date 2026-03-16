@@ -163,37 +163,33 @@ A sub-agent prompt typically tells it: which files to read, what to do, what to 
 
 Read [`.agents/skills/literature-review/SKILL.md`](.agents/skills/literature-review/SKILL.md) first — it is a complete working example of this pattern.
 
-Then write `.agents/skills/<skill-name>/SKILL.md` using this skeleton — fill in every `[...]`:
+Then write `.agents/skills/<skill-name>/SKILL.md` by working through these questions in order:
 
-```markdown
+**1. What are the shared files?**
+Agents cannot share memory — only files. Decide what files they communicate through. For each file, answer: who writes it, who reads it, and what exactly does it contain? Keep the list minimal.
+
+**2. What does the Lead Agent do on the very first run?**
+The shared files don't exist yet. What does the Lead Agent create, and what does it put in them? (e.g. listing all tasks in `progress.txt` as unchecked)
+
+**3. What is the Lead Agent's loop?**
+The Lead Agent's only job is to spawn and wait. Write out its loop as a numbered list: spawn one Sub-Agent, wait, check if done, repeat. When does it stop?
+
+**4. What does one Sub-Agent do — in full detail?**
+Assume the Sub-Agent knows absolutely nothing. Write every step it must take:
+- What files does it read first, and why each one?
+- How does it know which task to pick?
+- What exactly does it produce? (files, code, output)
+- How does it verify its work against the tests in `PRD.md`?
+- What does it write to `learning.txt`? Be specific — not "what it learned" but what *kind* of things are worth recording.
+- How does it signal that its task is done?
+- How does it make sure it stops after one task and does not continue?
+
+**5. What are the stop conditions?**
+When is the whole skill complete? What should happen if a Sub-Agent fails? Who gets notified?
+
 ---
-name: [SKILL NAME]
-description: [ONE SENTENCE: what it does and how]
----
 
-Shared files: `progress.txt` ([WHAT DOES IT TRACK?]), `learning.txt` ([WHAT DOES IT TRACK?])
-
-## Lead Agent
-1. Init (first run only): [WHAT FILES TO CREATE? WHAT TO PUT IN THEM?]
-2. Spawn Sub-Agent for the next incomplete task via the Task tool. Wait.
-3. Repeat step 2 until all tasks are done.
-
-## Sub-Agent
-1. Read PRD.md, progress.txt, and learning.txt.
-2. Pick the next incomplete task from progress.txt.
-3. [WHAT DOES IT DO? BE SPECIFIC.]
-4. Run the relevant tests from PRD.md. [WHAT COUNTS AS PASSING?]
-5. Append to learning.txt: [WHAT SHOULD IT RECORD?]
-6. Mark the task done in progress.txt with a one-line note.
-7. Stop. Do not proceed to the next task.
-
-## Stop Conditions
-- [WHEN IS THE WHOLE SKILL COMPLETE?]
-- Sub-agent fails repeatedly → escalate to user
-- User cancels
-```
-
-If you can't fill in a `[...]`, that's a sign your `PRD.md` needs more detail — go back to Step 2.
+If you struggle to answer any question, that's a signal — your `PRD.md` is not concrete enough. Go back to Step 2.
 
 Once `SKILL.md` is written, run it. The Lead Agent will work through all tasks automatically.
 
