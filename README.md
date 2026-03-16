@@ -69,17 +69,23 @@ Open opencode and build a prototype. No planning, no structure.
 
 ## Step 2 — Plan
 
-Remove your prototype (or git add and commit in a branch. Then change the branch and delete it.). 
+Remove your prototype (or git add and commit in a branch. Then change the branch and delete it.).
 
-Open a **fresh** opencode session by running `/new`. 
+Open a **fresh** opencode session by running `/new`.
+
+> **Why fresh?** Your vibe session has accumulated context — half-formed ideas, dead ends, implicit assumptions. A fresh agent has none of that. It will only know what you explicitly tell it, which forces you to articulate your idea clearly.
+
+> **Why relentless questions?** Vague plans produce vague output. Every ambiguity you leave unresolved becomes a decision the agent makes silently during implementation — usually wrong. The goal is to make every decision explicit *before* writing a line of code.
+
+> **Why a structured PRD format?** Each task subsection is a self-contained unit of context: the agent implementing it should need nothing else. If a task can't be written clearly in this format, it's not well-understood yet.
 
 Paste this prompt and replace `[SKILL]`:
 
 ```
-I want to build an AI skill called [SKILL] under .agents/skills/<skill-name>. 
-Interview me RELENTLESSLY until nothing is ambiguous. 
+I want to build an AI skill called [SKILL] under .agents/skills/<skill-name>.
+Interview me RELENTLESSLY until nothing is ambiguous.
 Ask one question at a time. Ask about inputs, outputs, edge cases, tools needed, and output
-format.  Then write PRD.md where each task is a subsection with format as follows: 
+format.  Then write PRD.md where each task is a subsection with format as follows:
 
 '''
 ## Task <number>: <task name>
@@ -104,6 +110,10 @@ Test cases:
 
 Open a **fresh** opencode session. Paste this prompt:
 
+> **Why tests before implementation?** Tests are a precise specification — they define "done" without ambiguity. Without them, the agent decides for itself when a task is complete. With them, correctness is checkable, not a matter of opinion.
+
+> **Why confirm each task's tests with a human?** You are the authority on what success looks like. The agent proposes; you decide. This step is where you catch misunderstandings before they get built.
+
 ```
 Read PRD.md. For each task, propose test cases covering: happy path, edge
 cases, bad inputs, and failure modes. Each test must have an explicit input and
@@ -111,17 +121,19 @@ expected output. Show me the tests for each task and ask me to confirm or
 refine before moving to the next. When all are approved, write it in PRD.md.
 ```
 
-**Output:** `PRD.md`
+**Output:** `PRD.md` (updated with test cases)
 
 ---
 
 ## Step 4 — Implement
 
-Use the **ralph wiggum pattern**: one subagent per task, each starting fresh.
+> **Why one subagent per task?** Context accumulates — successes, failures, half-finished code, second-guessing. A long-running agent drifts. Starting fresh each task means each agent only carries what matters: the plan (`PRD.md`), what's been done (`progress.txt`), and lessons learned (`learning.txt`). Nothing else bleeds in.
 
-First, read [.agents/skills/literature-review/SKILL.md](.agents/skills/literature-review/SKILL.md) to understand the pattern — a Lead Agent that loops, spawning one Sub-Agent per task via the Task tool, each reading shared state (`progress.txt`, `learning.txt`) and writing back before stopping.
+> **Why `learning.txt`?** Fresh context means the agent can't remember what the previous agent learned. `learning.txt` is the controlled channel for passing forward only what matters — not the whole history, just the distilled insight.
 
-Then paste this prompt into opencode to write your `SKILL.md` following the same pattern:
+First, read [.agents/skills/literature-review/SKILL.md](.agents/skills/literature-review/SKILL.md) — it demonstrates the pattern: a Lead Agent that loops, spawning one Sub-Agent per task via the Task tool, each reading shared state and stopping after one task.
+
+Then paste this prompt into opencode to write your `SKILL.md`:
 
 ```
 Read PRD.md and .agents/skills/literature-review/SKILL.md.
