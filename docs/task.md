@@ -76,7 +76,8 @@ Write a prompt to implement the plan based on the Ralph Wiggum loop. Your prompt
 See [`.agents/skills/literature-review/SKILL.md`](../.agents/skills/literature-review/SKILL.md) for an example.
 
 
-> [!NOTE] How Ralph Wiggum Pattern works:
+> [!NOTE] 
+> How Ralph Wiggum Pattern works:
 > - **Lead Agent:** a loop controller. It initializes shared files on first run, spawns one sub-agent per task via the Task tool, waits, then repeats until done.
 > - **Sub-Agent:** spawned fresh each time via the Task tool. It has no memory of previous agents. Its prompt must be fully self-contained.
 > - **Shared files:** the only memory between agents. Typically `progress.txt` (what is done) and `learning.txt` (lessons learned).
