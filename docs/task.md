@@ -27,7 +27,7 @@ Paste this prompt (replace `[SKILL]` and `[SKILL-NAME]`):
 I want to build an AI skill called [SKILL] under .agents/skills/[SKILL-NAME].
 Interview me RELENTLESSLY until nothing is ambiguous.
 Ask one question at a time. Cover inputs, outputs, edge cases, tools, and output format.
-Then write PRD.md where each task is a subsection:
+Then write PRD.md with overview and each task as a subsection. The subsection of each task should be:
 
 ## Task <N>: <name>
 - Goal:
@@ -39,6 +39,7 @@ Then write PRD.md where each task is a subsection:
 
 **Output:** `PRD.md`
 
+git commit the PRD.md. 
 
 ---
 
@@ -57,12 +58,14 @@ Write a prompt that:
 
 **Output:** `PRD.md` (updated with test cases)
 
----
+
+git commit the updated PRD.md.
 
 ## Step 4: Implement (Ralph Wiggum Pattern)
 
-> [!NOTE]
-> One agent runs too long and drifts. The Ralph Wiggum pattern fixes this: one sub-agent per task, each starting fresh. Shared files carry only what matters forward.
+Let's implement the plan using the Ralph Wiggum pattern. The idea: instead of one agent trying to do everything, we spawn a fresh agent for each task. Each agent has no memory of previous agents, so it cannot drift. The only memory is in shared files that carry forward what matters (e.g., `learning.txt` and `progress.txt`).
+
+See [`.agents/skills/literature-review/SKILL.md`](../.agents/skills/literature-review/SKILL.md) for an example.
 
 ### How it works
 
@@ -70,14 +73,14 @@ Write a prompt that:
 - **Sub-Agent:** spawned fresh each time via the Task tool. It has no memory of previous agents. Its prompt must be fully self-contained.
 - **Shared files:** the only memory between agents. Typically `progress.txt` (what is done) and `learning.txt` (lessons learned).
 
-### Writing your SKILL.md
+### Checklist for the implementation prompt
 
-Read [`.agents/skills/literature-review/SKILL.md`](../.agents/skills/literature-review/SKILL.md) as a reference, then write `.agents/skills/<skill-name>/SKILL.md` by answering these questions:
+When writing the implementation prompt for the sub-agent, make sure to cover: 
 
-1. **Shared files:** What files do agents communicate through? For each: who reads it, who writes it, what does it contain?
-2. **Initialization:** The files do not exist on first run. What does the Lead Agent create, and what does it put in them?
-3. **Lead Agent loop:** Write the loop as a numbered list. When does it spawn? When does it stop?
-4. **Sub-Agent steps:** The sub-agent knows nothing. Write every step:
+- [ ] **Shared files:** What files do agents communicate through? For each: who reads it, who writes it, what does it contain?
+- [ ] **Initialization:** The files do not exist on first run. What does the Lead Agent create, and what does it put in them?
+- [ ] **Lead Agent loop:** Write the loop as a numbered list. When does it spawn? When does it stop?
+- [ ] **Sub-Agent steps:** The sub-agent knows nothing. Write every step:
    - Which files does it read, and why?
    - How does it pick which task to do?
    - What does it produce?
@@ -85,7 +88,7 @@ Read [`.agents/skills/literature-review/SKILL.md`](../.agents/skills/literature-
    - What does it write to `learning.txt`? Be specific about what kind of information belongs there.
    - How does it mark the task done?
    - How does it ensure it stops after one task?
-5. **Stop conditions:** When is the whole skill complete? What happens on repeated failure?
+- [ ] **Stop conditions:** When is the whole skill complete? What happens on repeated failure?
 
 If you cannot answer a question, your `PRD.md` is not specific enough. Go back to Step 2.
 

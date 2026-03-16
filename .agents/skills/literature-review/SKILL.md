@@ -35,7 +35,19 @@ Synthesis (once, after all papers done):
 2. Read `templates/synthesis.md` for format.
 3. Overwrite `synthesis.md` with all three sections: Synthesis, Contradictions, Open Questions.
 
-Writing style (all sub-agents): clear+concise, define jargon, LaTeX for equations (display mode for key ones), max 3 sentences/paragraph, paragraph-based narrative, no bullets/tables, conversational tone.
+Writing style (all sub-agents): 
+- concise by sacrificing grammer but avoid ambiguity
+- define jargon
+- LaTeX for equations (display mode for key ones)
+- max 3 sentences/paragraph
+- paragraph-based narrative
+- no bullets/tables
+- conversational tone
+
+Writing style (learning.txt):
+- speak aloud your thought process as you read each paper. 
+- keep the reflection conncise and focused on insights/themes/gaps.
+- if any issue in tool usage, note it here and move on.
 
 ## Stop Conditions
 - All papers reviewed + `synthesis.md` written

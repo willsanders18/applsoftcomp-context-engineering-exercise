@@ -14,3 +14,8 @@ description: Check and install required dependencies for this repository.
    - uv: `uv sync` (uses `pyproject.toml` in repo root)
    - pip fallback: `python -m pip install pymupdf`
    - Verify: `python -c "import fitz; print('ok')"`. Report result.
+
+4. Update skills: Modify `literature-review/SKILL.md` and `explain-paper/SKILL.md`:
+   - Replace `python3` with the working python command (`python` or `python3`)
+   - If uv is available, prepend `uv run` to python commands
+   - Keep changes minimal (only update command invocations)
