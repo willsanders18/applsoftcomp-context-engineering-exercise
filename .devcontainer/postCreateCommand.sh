@@ -3,27 +3,12 @@ set -e
 
 echo "=== Setting up Context Engineering Exercise ==="
 
-# ── 1. Install uv ──────────────────────────────────────────────────────────
-echo "Installing uv..."
-curl -LsSf https://astral.sh/uv/install.sh | sh
-export PATH="$HOME/.local/bin:$PATH"
-echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
-echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.profile
-uv --version
-
-# ── 2. Install Python dependencies ────────────────────────────────────────
+# ── 1. Install Python dependencies ────────────────────────────────────────
 echo "Installing Python dependencies..."
 UV_LINK_MODE=copy uv sync
-echo "Verifying pymupdf..."
 uv run python -c "import fitz; print('pymupdf ok')"
 
-# ── 3. Install OpenCode ───────────────────────────────────────────────────
-echo "Installing OpenCode..."
-curl -fsSL https://opencode.ai/install | bash
-export PATH="$HOME/.local/bin:$PATH"
-opencode --version 2>/dev/null || echo "OpenCode installed (restart terminal to use)"
-
-# ── 4. Configure OpenCode ─────────────────────────────────────────────────
+# ── 2. Configure OpenCode ─────────────────────────────────────────────────
 echo "Configuring OpenCode..."
 mkdir -p ~/.config/opencode
 cat > ~/.config/opencode/opencode.json << 'EOF'
@@ -48,15 +33,12 @@ cat > ~/.config/opencode/opencode.json << 'EOF'
 }
 EOF
 
-# ── 5. Update skill commands for this environment ─────────────────────────
+# ── 3. Update skill commands for this environment ─────────────────────────
 echo "Updating skill commands..."
-PYTHON_CMD="uv run python3"
-SED_INPLACE=(-i)
-[[ "$(uname)" == "Darwin" ]] && SED_INPLACE=(-i '')
 for skill_file in .agents/skills/*/SKILL.md; do
   if [ -f "$skill_file" ]; then
-    sed "${SED_INPLACE[@]}" "s/python3 /$PYTHON_CMD /g" "$skill_file"
-    sed "${SED_INPLACE[@]}" "s/python /$PYTHON_CMD /g" "$skill_file"
+    sed -i "s/python3 /uv run python3 /g" "$skill_file"
+    sed -i "s/python /uv run python3 /g" "$skill_file"
   fi
 done
 
