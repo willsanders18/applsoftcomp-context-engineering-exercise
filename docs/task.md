@@ -92,21 +92,16 @@ When writing the implementation prompt for the sub-agent, make sure to cover:
 
 If you cannot answer a question, your `PRD.md` is not specific enough. Go back to Step 2.
 
-### Expected output
+## Validation 
 
-```
-.agents/skills/<skill-name>/
-  SKILL.md
-  templates/
-  tools/
-```
-
-Run the skill on a real input and verify the output against the tests in `PRD.md`.
+Run your skill on the tests you designed. Fix the skill until you are satisfied with the results. 
 
 
 ### Tips 
 
-Shorter instruction is better. If the prompt is exceeding 100 lines, consider creating templates for parts or use tools to automate parts of the process.
+Shorter instruction is better, not just for the agent, but also for you for readability and maintainability. Too long instruction is hard to understand and hard to maintain. This echoes the principle of ["Documentation is automation"](https://cacm.acm.org/practice/documentation-is-automation/).
+
+If the prompt is exceeding 100 lines, consider creating templates for parts or use tools to automate parts of the process.
 
 > [!TIP]
 > Put `Sacrifice grammer` is effective in condensing instructions. Agents tend to follow grammer rules too strictly, which can lead to unnecessary verbosity. By explicitly allowing the agent to sacrifice grammar, you can encourage it to be more concise and to the point, which is often more effective for task-oriented prompts.
