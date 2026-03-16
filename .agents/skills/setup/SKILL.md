@@ -11,6 +11,6 @@ description: Check and install required dependencies for this repository.
    - Verify: `uv --version`. If still fails, skip uv and use pip.
 
 3. Check pymupdf: `python -c "import fitz"`. If missing:
-   - uv: `uv pip install pymupdf`
+   - uv: `uv sync` (uses `pyproject.toml` in repo root)
    - pip fallback: `python -m pip install pymupdf`
    - Verify: `python -c "import fitz; print('ok')"`. Report result.
