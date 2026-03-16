@@ -102,3 +102,13 @@ If you cannot answer a question, your `PRD.md` is not specific enough. Go back t
 ```
 
 Run the skill on a real input and verify the output against the tests in `PRD.md`.
+
+
+### Tips 
+
+Shorter instruction is better. If the prompt is exceeding 100 lines, consider creating templates for parts or use tools to automate parts of the process.
+
+> [!TIP]
+> Put `Sacrifice grammer` is effective in condensing instructions. Agents tend to follow grammer rules too strictly, which can lead to unnecessary verbosity. By explicitly allowing the agent to sacrifice grammar, you can encourage it to be more concise and to the point, which is often more effective for task-oriented prompts.
+
+ 
