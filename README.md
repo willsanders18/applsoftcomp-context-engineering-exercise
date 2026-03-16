@@ -9,13 +9,20 @@ Build an AI skill from scratch. You will practice test-driven development, struc
 
 We use [opencode](https://opencode.ai/) as the coding environment. `claude code` users: rename `.agents` to `.claude`.
 
+## Before you start
+
+See the [Before you start](docs/before-you-start.md) document before you start.
+
 ## Launch on GitHub Codespaces
 
 The easiest way to get started. No local install needed.
 
-1. After forking, open **your fork** on GitHub and click the button below (or **Code → Codespaces → Create codespace on main**)
+![](./docs/codespace.png)
 
-   [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/skojaku/applsoftcomp-context-engineering-exercise)
+1. After forking, go to your repository on the GitHub web page. Then, click Code → Codespaces → Create codespace on main**)
+
+
+
 
    > [!NOTE]
    > The button above links to the original repo. Open it from **your fork's page** so the Codespace is created under your account.

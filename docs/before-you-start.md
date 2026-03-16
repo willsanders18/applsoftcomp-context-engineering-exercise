@@ -5,13 +5,17 @@
 You need an Ollama account to use the `qwen3.5:cloud` model, which is the default for this exercise.
 
 1. Go to [ollama.com](https://ollama.com/) and sign in or create a free account
+
+![](./ollama-hp.png)
+
 2. Click your profile icon and go to **Settings → Keys**
 3. Click **Add API Key**, give it a name, and copy the key
+
+![](./api-key.png)
 4. In OpenCode, type `/connect`, select **Ollama Cloud**, and paste the key
 
 Free accounts include access to `qwen3.5:cloud` with no credit card required.
 
----
 
 ## OpenRouter API Key (optional)
 
