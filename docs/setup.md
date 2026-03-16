@@ -1,6 +1,6 @@
 # Setup
 
-<img src="./opencode.png" width="300" alt="opencode">
+<img src="./opencode.png" width="50%" alt="opencode">
 
 > [!WARNING]
 > Set the LLM to `qwen3.5:35b`, `qwen3.5:397b`, or `glm-5` before starting.
