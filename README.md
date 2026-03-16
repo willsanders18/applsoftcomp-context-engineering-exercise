@@ -6,7 +6,7 @@ We use [opencode](https://opencode.ai/) as the coding environment. `claude code`
 
 ## Launch on GitHub Codespaces
 
-The easiest way to get started — no local install needed.
+The easiest way to get started. No local install needed.
 
 1. Click the button below (or go to **Code → Codespaces → Create codespace on main**)
 
